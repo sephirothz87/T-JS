@@ -1,0 +1,27 @@
+{
+  "name": "t-js",
+  "version": "1.0.0",
+  "description": "t-sj",
+  "main": "index.js",
+  "dependencies": {
+    "_jquery@3.2.1@jquery": "^3.2.1",
+    "jquery": "^3.2.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "t-js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sephirothz87/T-JS.git"
+  },
+  "keywords": [
+    "t-js"
+  ],
+  "author": "sephirothz87",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sephirothz87/T-JS/issues"
+  },
+  "homepage": "https://github.com/sephirothz87/T-JS#readme"
+}
