@@ -1,42 +1,32 @@
 //https://leetcode.com/problems/median-of-two-sorted-arrays/description/
 
 var longestPalindrome = function(s) {
-    var start = 0;
-    var end = 0;
-    var max_len = 0;
-    var s_a = s.split('');
-    // var ret = s_a[0];
+    let start = 0, end=0, len=s.length;
 
-    for(let i=0;i<s_a.length;i++){
-        var len1 = fromMid(s_a,i,i);
-        var len2 = fromMid(s_a,i,i+1);
+    let len_t = 0;
+    for(let i=0;i<len;i++){
+        let len1 = fromMid(s,i,i);
+        let len2 = fromMid(s,i,i+1);
 
         if(len1==1&&len2==0){
             continue;
         }
 
-        var len = Math.max(len1,len2);
-
-        if(len>max_len){
-            max_len = len;
-            if(len%2==0){
-                start = i-(len-2)/2;
-                end = i+len/2;
-            }else{
-                start = i-(len-1)/2;
-                end = i+(len-1)/2;
-            }
+        len_t = Math.max(len1,len2);
+        if(len_t>end-start){
+            start = i-Math.ceil(len_t/2-1)
+            end = start + len_t;
         }
     }
-    if(max_len!=0){
-        return s_a.slice(start,end+1).join('');
-    }else{
-        return s_a[0];
+
+    if(len_t == 0){
+        return s[0];
     }
+    return s.substring(start,end);
 };
 
-var fromMid = (s_a,left,right)=>{
-    while(s_a[left]!==undefined && s_a[right]!==undefined && s_a[left]==s_a[right]){
+var fromMid = (s,left,right)=>{
+    while(left>=0 && right<s.length && s[left]==s[right]){
         left--;
         right++;
     }
@@ -44,9 +34,9 @@ var fromMid = (s_a,left,right)=>{
 };
 
 
-s = "babad";
+// s = "babad";
 s = "cbbd";
-s = "a";
+// s = "a";
 
 // s_a = s.split('');
 // console.log(s_a.slice(1,4));
