@@ -2,29 +2,33 @@
 
 
 
-
-//效率极差，重做
+//2017-12-01-111246
+//上一个版本，效率极差，重做
 //思路，用一个对象存每一个值最后一次出现的位置，然后计算出遍历整个字符串后的最大值
+//这个方案怀疑是map没有初始化，查询起来会非常耗时，改进思路是把这个map反过来，用位置表示字母
+//用位置表示字母的方式不可取，而是用字符的ascii码当做key来用
 var lengthOfLongestSubstring = function(s) {
-    let map={},cur=0,len=0;
-
+    let map = Array(256).fill(-1) ,cur = 0, len = 0;
     for(let i=0;i<s.length;i++){
-        if(map[s[i]]){cur = Math.max(map[s[i]],cur);}
+        let at = s[i].charCodeAt();
+        if(map[at] !== -1){cur = Math.max(map[at],cur);}
         len = Math.max(len,i-cur+1);
-        map[s[i]] = i+1;
+        map[at] = i+1;
     }
-
     return len;
 };
 
-// var a = "abcabcbb";
+var a = "abcabcbb";
 // var a = "bbbbb";
 // var a = "pwwkew";
 // var a = "c";
-var a = "";
+// var a = "";
+// var a = "abcddcba";
 
 console.log(lengthOfLongestSubstring(a));
-//效率极差，重做
+// console.log(a[5].charCodeAt());
+//2017-12-01-111246
+
 
 //最终版
 // var lengthOfLongestSubstring = function(s) {
