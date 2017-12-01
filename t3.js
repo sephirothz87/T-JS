@@ -11,8 +11,10 @@ var lengthOfLongestSubstring = function(s) {
     let map = Array(256).fill(-1) ,cur = 0, len = 0;
     for(let i=0;i<s.length;i++){
         let at = s[i].charCodeAt();
-        if(map[at] !== -1){cur = Math.max(map[at],cur);}
-        len = Math.max(len,i-cur+1);
+        let map_at = map[at];
+        if(map_at !== -1){cur = map_at>cur?map_at:cur;}
+        let tm_len = i-cur+1;
+        len = len>tm_len?len:tm_len;
         map[at] = i+1;
     }
     return len;
