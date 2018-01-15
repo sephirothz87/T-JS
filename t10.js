@@ -4,8 +4,14 @@ function Person() {
     this.doo = function(x){console.log('doo ' + x)};
 };
 
-Person.prototype.p_say = (x)=>{console.log('person p_say ' + x)};
-Person.prototype.p_dosth = (x)=>{console.log('person p_do ' + x)};
+// 这样写也OK，但比较麻烦
+// Person.prototype.p_say = (x)=>{console.log('person p_say ' + x)};
+// Person.prototype.p_dosth = (x)=>{console.log('person p_do ' + x)};
+
+Person.prototype = {
+    p_say : (x)=>{console.log('person p_say ' + x)},
+    p_dosth : (x)=>{console.log('person p_do ' + x)}
+}
 
 function Student() {
     this.say = (x)=>{console.log('student say ' + x)};
