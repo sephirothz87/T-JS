@@ -21,6 +21,8 @@
 	<body>
 		<div id="container"></div>
 
+		<video src="http://oc8qda7cw.bkt.clouddn.com/mayjlee.mp4" controls="controls"></video>
+
 		<script>
 			window.onload = function() {
 				var player = new KTPlayer({
@@ -28,6 +30,7 @@
 					pic: 'http://oc8qda7cw.bkt.clouddn.com/mayjlee.png',
 					root: document.getElementById('container')
 				});
+				console.log(player);
 				player.init();
 			};
 		</script>

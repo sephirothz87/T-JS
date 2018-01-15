@@ -1,5 +1,10 @@
 ;
+//自执行函数前加分号是个好习惯，避免上一个引用的js文件没有分号导致这个括号
+//被解析成上一个函数的参数什么的
 (function(window, document) {
+	//svg 可缩放矢量图形
+	//也就是通过下面这些参数来花各种矢量图形
+	//有工具可以转换，也可以自己去学学画
 	var svg = {
 		play: 'M153.6 75.794916C153.6 19.283822 190.753317-0.345061 237.362821 32.501243L819.04468 442.419778C865.30561 475.020437 865.140746 527.555686 818.320241 560.007424L238.087264 962.172457C191.426236 994.513664 153.6 974.380703 153.6 918.409001L153.6 75.794916Z',
 		pause: 'M153.6 98.185425C153.6 43.959112 196.985769 0 251.345455 0 305.328778 0 349.090909 44 349.090909 98.185425L349.090909 925.814574C349.090909 980.040888 305.70514 1024 251.345455 1024 197.362131 1024 153.6 980 153.6 925.814574L153.6 98.185425ZM674.909092 98.185425C674.909092 43.959112 718.294861 0 772.654546 0 826.63787 0 870.4 44 870.4 98.185425L870.4 925.814574C870.4 980.040888 827.014231 1024 772.654546 1024 718.671222 1024 674.909092 980 674.909092 925.814574L674.909092 98.185425Z',
@@ -10,6 +15,8 @@
 		full_off: 'M65.422222 145.066667 321.422222 145.066667 321.422222 216.177778 139.377778 216.177778 139.377778 401.066667 65.422222 401.066667ZM59.733333 867.555556 59.733333 611.555556 128 611.555556 128 793.6 315.733333 793.6 315.733333 867.555556ZM958.577778 867.555556 705.422222 867.555556 705.422222 796.444444 887.466667 796.444444 887.466667 608.711111 958.577778 608.711111ZM961.422222 147.911111 961.422222 403.911111 890.311111 403.911111 890.311111 221.866667 702.577778 221.866667 702.577778 147.911111Z'
 	};
 	var Public = {
+		//这里的变量名加不加引号其实无所谓的，并且用.和[]都和可以引用该属性
+		//不符合js变量定义规则的名字
 		timeFormat: function(time) {
 			var tempMin = parseInt(time / 60);
 			var tempSec = parseInt(time % 60);
@@ -18,9 +25,12 @@
 			return curMin + ':' + curSec;
 		},
 		'leftDistance': function(el) {
+			//？？el是个啥暂时还不清楚，怎么用的，应该是个element，调用的地方再看一下
 			var left = el.offsetLeft;
+			//dom中的左偏移
+			//查了一下，这几个属性都没查到，都是HTML5新加的属性，查看控件是否处于全屏模式
 			if(!document.fullscreenElement && !document.mozFullScreenElement && !document.webkitFullscreenElement && !document.msFullscreenElement) {
-				while(el.offsetParent) {
+				while(el.offsetParent) {//？？元素的偏移容器
 					el = el.offsetParent;
 					left += el.offsetLeft;
 				}
@@ -51,12 +61,15 @@
 	var _this, video, loading, hideFn;
 
 	function KTPlayer(options) {
+		console.log(this);//KTPlayer{}
 		this.options = options;
 		this.root = options.root || document.body;
 		this.target = null;
 	}
+	//??为什么这些方法要写在原型中？
 	KTPlayer.prototype = {
 		init: function() {
+			console.log(this);
 			if(!(typeof this.options === 'object' && this.options.src && this.options.pic)) {
 				console.error('请正确配置对象！');
 				return;
@@ -156,11 +169,22 @@
 			this.bind();
 		},
 		bind: function() {
+            console.log(this);
+            console.log(_this);
+            //不看不知道，DOM4开始已经有这种类似jquery的选择器了,这个在IE8中也支持
 			_this.target = this.root.querySelector('.ktPlayer');
+			//video的本质是一个element，就是模板里那个video标签
 			video = this.target.querySelector('.ktPlayer-source');
+            console.log(this);
+            console.log(_this);
+            //navigator中保存了客户端的一些基础信息，浏览器名字之类的
+			//快速查询字符串中是否包含特定字符的方法
 			if(window.navigator.userAgent.indexOf('Firefox') == -1) {
 				this.target.querySelector('.ktPlayer-circle').setAttribute('class', 'ktPlayer-circle ktPlayer-circle-rotate');
 			}
+
+			//下面这些事件并不是自定义的，都是H5视频元素中自带的事件
+			//https://developer.mozilla.org/zh-CN/docs/Web/API/HTMLVideoElement
 			video.addEventListener('canplay', this.canPlay);   //是否可播放
 			video.addEventListener('durationchange', this.totalTime);   //视频总时长
 			video.addEventListener('progress', this.load);  //当浏览器正在下载音频/视频时
@@ -196,10 +220,14 @@
 			_this.target.querySelector('.ktPlayer-pause').addEventListener('click', _this.videoPlay);
 		},
 		buttonPlay: function() {
+			//用按钮切换播放/暂停
 			var button = _this.target.querySelector('.ktPlayer-icon-play');
 			if(video.paused) {   //是否暂停
+				//这个方法是自定义的，切换按钮的svg图标
 				_this.changeSVG(button, svg.pause);
+				//这里就是H5自带的播放视频的接口
 				video.play();
+				//原声的removeclass接口
 				_this.target.querySelector('.ktPlayer-pause').classList.remove('ktPlayer-on');
 			} else {
 				_this.changeSVG(button, svg.play);
@@ -214,6 +242,7 @@
 			}
 		},
 		videoPlay: function() {
+			//点击视频切换播放/暂停
 			//clearTimeout(timeFn);
 			//timeFn = setTimeout(function(){
 			var button = _this.target.querySelector('.ktPlayer-icon-play');
@@ -230,6 +259,7 @@
 		},
 		mute: function() {
 			if(video.muted) {   //设置或返回音频/视频是否静音
+				//这个muted是个自定义的变量
 				video.muted = false;
 				_this.changeVolumeBar(video.volume * 100);   //设置或返回音频/视频的音量  0-1之间
 			} else {
@@ -237,6 +267,7 @@
 				_this.changeVolumeBar(0);
 			}
 		},
+		//统一的图标切换接口
 		changeSVG: function(dom, svg) {
 			dom.querySelector('path').setAttribute('d', svg);
 		},
@@ -244,20 +275,31 @@
 			var button = _this.target.querySelector('.ktPlayer-icon-play');
 			_this.changeSVG(button, svg.play);
 			_this.hideController();
+			//播放结束，播放按钮重置为播放
+			//控制条自动隐藏？这里应该是再次出现
 		},
 		bindSpeedRate: function() {
 			var item = _this.target.querySelectorAll('.ktPlayer-setting-item');
 			for(var i = 0; i < item.length; i++) {
 				item[i].addEventListener('click', function() {
+					//这个playbackRate是HTMLVideoElement的父类HTMLMediaElement中的一个属性，代表播放速率
 					video.playbackRate = this.getAttribute('data-speed');   //设置或返回音频/视频播放的速度
 				});
 			}
 		},
 		totalTime: function() {   //视频总时长
+			console.log('durationchange');
+			//测试了一下，这条日志只在视频加载完打印了一次，那么就是说这个是视频总时长变化了才会改
 			var time = _this.target.querySelector('.ktPlayer-time-total');
 			time.innerHTML = Public.timeFormat(video.duration);
+			//duration同样是HTMLMediaElement中的属性，视频总时长
+			//Video元素中有个响应的durationchange事件，后面应该会用到
 		},
 		updateTime: function() {
+			//本以为这里也应该在durationchange事件中触发，实际是下面这这个事件
+			//timeupdate
+            // console.log('timeupdate');
+            //测试了一下，这条日志在播放过程中不停的在打印
 			var time = parseFloat(video.currentTime);   //设置或返回音频/视频中的当前播放位置（以秒计）
 			var percent = (time / video.duration) * 100;
 			_this.target.querySelector('.ktPlayer-played').style.width = percent.toFixed(2) + '%';
@@ -267,9 +309,11 @@
 			//console.log(video.buffered.end(video.buffered.length - 1))
 			var percent = video.buffered.length ? video.buffered.end(video.buffered.length - 1) / video.duration * 100 : 0;
 			_this.target.querySelector('.ktPlayer-loaded').style.width = percent.toFixed(2) + '%';
+			//更新已加载进度条的长度
 		},
 		fullScreen: function() {
-			
+			//全屏、非全屏切换
+			//这里会检测ESC键，但是keyboard相关的回调并没有指定esc键，这里暂时认为是video元素在全屏模式下默认绑定了esc键是还原全屏的按键
 			var button = _this.target.querySelector('.ktPlayer-icon-fullscreen');
 			var fullscreenElement = document.fullscreenElement || document.mozFullScreenElement || document.webkitFullscreenElement || document.msFullscreenElement;
 			if(!fullscreenElement) {  //如果不是全屏
@@ -296,10 +340,13 @@
 			
 		},
 		loading: function() {
+            //绑定的事件是：当音频/视频在已因缓冲而暂停或停止后已就绪时
+			//也就是说卡了缓冲调一次，恢复播放再调一次
 			var before = 0,
 				now = 0;
 			var sign = false;
 			if(loading) {
+				//这样就可以解释这里的代码了，恢复播放后，去掉缓冲监视的interval
 				clearInterval(loading);
 			}
 			loading = setInterval(function() {
@@ -314,11 +361,13 @@
 				}
 				before = now;
 			}, 100);
+			//每100ms检测一次loading状态，更新已加载的绿色进度条
 		},
 		keyBoard: function(e) {
 			var event = e || window.event;
 			var volume;
 			switch(event.keyCode) {
+				//左右调进度
 				case 37:
 					event.preventDefault();
 					video.currentTime -= 10;
@@ -327,6 +376,7 @@
 					event.preventDefault();
 					video.currentTime += 10;
 					break;
+					//上下调音量
 				case 38:
 					event.preventDefault();
 					volume = video.volume + 0.1;
@@ -340,6 +390,7 @@
 			}
 		},
 		keyboardVolume: function(percentage) {
+			//更新音量进度条，注意按键那里也有调用
 			percentage = percentage.toFixed(2);
 			percentage = percentage > 0 ? percentage : 0;
 			percentage = percentage < 1 ? percentage : 1;
@@ -463,8 +514,20 @@
 			}
 		}
 	};
+	//相当于实现了一个export的功能，让window中的KTPlayer等于资源文件中定义的KTPlayer
 	window.KTPlayer = KTPlayer;
 })(window, document);
+//jquery源码差不多也是这样写的
+//匿名函数，防止和其他代码发生冲突
+//window.KTPlayer = KTPlayer;  这句话把想给外部的接口暴露出去
+
+
 if(typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
 	module.exports = window.KTPlayer;
 }
+
+//其实直接用原声的H5，video标签这些功能基本都有，这里通过video element的所有属性和事件自己重新实现了一套UI
+//增加了点击视频内容播放/暂停的功能，键盘控制音量这些功能
+//学到了不少DOM新接口
+//重新温习了一下原型链
+//知道了SVG这个东西
