@@ -115,6 +115,29 @@ console.log(obj_to_number_3.toString());//10
 //这里和书上讲的不同，valueOf解析成NaN以后没有再去调用toString方法，还是我对toString方法的理解有误？
 
 
+var obj_to_number_4 = {
+    'a':1,
+    'b':'ccc',
+    toString:function(){return '00010';}
+};
+console.log(Number(obj_to_number_4));//10
+
+console.log(obj_to_number_4.valueOf().toString());//00010
+console.log(obj_to_number_4.toString());//00010
+
+var obj_to_number_5 = {
+    'a':1,
+    'b':'ccc',
+    toString:function(){return 'abc';}
+};
+console.log(Number(obj_to_number_5));//NaN
+
+console.log(obj_to_number_5.valueOf().toString());//abc
+console.log(obj_to_number_5.toString());//abc
+//看了这两个例子可以理解了，如果valueOf存在，那即使是NaN，也不再看toString
+//如果valueOf不存贼，再看String
+
+
 console.log('===============================parseInt===============================');
 var parse_num1 = parseInt("1234blue"); // 1234
 var parse_num2 = parseInt(""); // NaN
