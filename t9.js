@@ -11,6 +11,9 @@ var obj = {
     '2j' : ' j ',
     // 3k : function(x){console.log(' k ') + x},  //不可以这样写,报错
     '4l' : function(x){console.log(' l ' + x)},
+    1:1,
+    2:2,
+    3:'3'
 }
 
 ///////////////////////////////////////////////////////////////
@@ -25,6 +28,10 @@ console.log(obj.h)//(x)=>{xxxx}
 
 // console.log(obj.2j)//不可以这样写,报错
 // console.log(obj.4l)//不可以这样写,报错
+
+// console.log(obj.1)//不可以这样写,报错
+// console.log(obj.2)//不可以这样写,报错
+// console.log(obj.3)//不可以这样写,报错
 ///////////////////////////////////////////////////////////////
 
 
@@ -48,6 +55,9 @@ console.log(obj['g'])//(x)=>{xxxx}
 console.log(obj['h'])//(x)=>{xxxx}
 console.log(obj['2j'])//j
 console.log(obj['4l'])//function(){xxxxx}
+console.log(obj['1'])//1
+console.log(obj['2'])//2
+console.log(obj['3'])//'3'  //数字key会自动转为字符串key
 ///////////////////////////////////////////////////////////////
 
 
