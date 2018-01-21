@@ -2,8 +2,8 @@
 
 
 console.log('===============================例子1===============================');
-console.log([1,2,]);
-console.log([,,,,,]);
+console.log([1, 2,]);
+console.log([, , , , ,]);
 //不建议这两种写法，有些浏览器会创建出长度不定的数据，在各个浏览器中的表现也可能不一样
 
 
@@ -65,8 +65,12 @@ console.log(colors.toLocaleString());//red,blue,green
 console.log('===================tips===================');
 //ps:这里一个引申的知识点，console打印的是valueof，alert打印的是toString
 
-colors.toString = ()=>{return 'i am toString';};
-colors.valueOf = ()=>{return 'i am valueOf';};
+colors.toString = () => {
+    return 'i am toString';
+};
+colors.valueOf = () => {
+    return 'i am valueOf';
+};
 
 console.log(colors);//["red", "blue", "green"]
 console.log(colors.toString());//i am toString
@@ -74,18 +78,18 @@ console.log(colors.valueOf());//i am valueOf
 
 console.log('===================理解toLocalString===================');
 var person1 = {
-    toLocaleString : function () {
+    toLocaleString: function () {
         return "Nikolaos";
     },
-    toString : function() {
+    toString: function () {
         return "Nicholas";
     }
 };
 var person2 = {
-    toLocaleString : function () {
+    toLocaleString: function () {
         return "Grigorios";
     },
-    toString : function() {
+    toString: function () {
         return "Greg";
     }
 };
@@ -165,11 +169,15 @@ values.sort();
 console.log(values); //(5) [0, 1, 10, 15, 5]
 
 var values = [0, 1, 5, 10, 15];
-values.sort((x,y)=>{return x-y;});
+values.sort((x, y) => {
+    return x - y;
+});
 console.log(values);//(5) [0, 1, 5, 10, 15]
 
 var values = [0, 1, 5, 10, 15];
-values.sort((x,y)=>{return y-x;});
+values.sort((x, y) => {
+    return y - x;
+});
 console.log(values);//(5) [15, 10, 5, 1, 0]
 //原理，sort的默认比较函数是取两个值的valueOf作差，所以10<5
 //将比较函数修改为值差即可
@@ -184,8 +192,8 @@ console.log(colors2); //red,green,blue,yellow,black,brown
 console.log('============slice============');
 var colors = ["red", "green", "blue", "yellow", "purple"];
 var colors2 = colors.slice(1);
-var colors3 = colors.slice(1,4);
-var colors4 = colors.slice(-3,-1);
+var colors3 = colors.slice(1, 4);
+var colors4 = colors.slice(-3, -1);
 console.log(colors2); //green,blue,yellow,purple
 console.log(colors3); //green,blue,yellow
 console.log(colors4); //blue,yellow
@@ -193,7 +201,7 @@ console.log(colors4); //blue,yellow
 
 console.log('============splice============');
 var colors = ["red", "green", "blue"];
-var removed = colors.splice(0,1); // 删除第一项
+var removed = colors.splice(0, 1); // 删除第一项
 console.log(colors); // green,blue
 console.log(removed); // red，返回的数组中只包含一项
 
@@ -207,14 +215,14 @@ console.log(removed); // yellow，返回的数组中只包含一项
 
 
 console.log('===================位置方法===================');
-var numbers = [1,2,3,4,5,4,3,2,1];
+var numbers = [1, 2, 3, 4, 5, 4, 3, 2, 1];
 console.log(numbers.indexOf(4)); //3
 console.log(numbers.lastIndexOf(4)); //5
 console.log(numbers.indexOf(3, 4)); //6 从第4位开始查找3
 console.log(numbers.lastIndexOf(3, 4)); //2 从第4位开始反向查找3
 
-var person = { name: "Nicholas" };
-var people = [{ name: "Nicholas" }];
+var person = {name: "Nicholas"};
+var people = [{name: "Nicholas"}];
 var morePeople = [person];
 console.log(people.indexOf(person)); //-1
 console.log(morePeople.indexOf(person)); //0    //值引用
@@ -229,34 +237,34 @@ console.log('===================迭代方法===================');
  map()：对数组中的每一项运行给定函数，返回每次函数调用的结果组成的数组。
  some()：对数组中的每一项运行给定函数，如果该函数对任一项返回true，则返回true。*/
 
-var numbers = [1,2,3,4,5,4,3,2,1];
+var numbers = [1, 2, 3, 4, 5, 4, 3, 2, 1];
 
-var everyResult = numbers.every(function(item, index, array){
+var everyResult = numbers.every(function (item, index, array) {
     return (item > 2);
 });
 console.log(everyResult);//false
 
-var everyResult2 = numbers.every(function(item, index, array){
+var everyResult2 = numbers.every(function (item, index, array) {
     return (item > 0);
 });
 console.log(everyResult2);//true
 
-var someResult = numbers.some(function(item, index, array){
+var someResult = numbers.some(function (item, index, array) {
     return (item > 2);
 });
 console.log(someResult);//true
 
-var filterResult = numbers.filter(function(item, index, array){
+var filterResult = numbers.filter(function (item, index, array) {
     return (item > 2);
 });
 console.log(filterResult);//(5) [3, 4, 5, 4, 3]
 
-var mapResult = numbers.map(function(item, index, array){
+var mapResult = numbers.map(function (item, index, array) {
     return item * 2;
 });
 console.log(mapResult);//(9) [2, 4, 6, 8, 10, 8, 6, 4, 2]
 
-var forEachResult = numbers.forEach(function(item, index, array){
+var forEachResult = numbers.forEach(function (item, index, array) {
     array[index] = item * 2;
     return item * 2;
 });
@@ -266,15 +274,15 @@ console.log(numbers);//(9) [2, 4, 6, 8, 10, 8, 6, 4, 2]
 
 console.log('===================归并方法===================');
 
-var values = [1,2,3,4,5];
-var sum = values.reduce(function(prev, cur, index, array){
+var values = [1, 2, 3, 4, 5];
+var sum = values.reduce(function (prev, cur, index, array) {
     // console.log(prev);//1 3 6 10
     return prev + cur;
 });
 console.log(sum);//15
 
-var values = [1,2,3,4,5];
-var sum = values.reduceRight(function(prev, cur, index, array){
+var values = [1, 2, 3, 4, 5];
+var sum = values.reduceRight(function (prev, cur, index, array) {
     console.log(prev);//5 9 12 14
     return prev + cur;
 });
