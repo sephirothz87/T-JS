@@ -26,7 +26,6 @@ console.log(a.x);//bcd
 
 
 console.log('===============================例子2===============================');
-
 var s_2 = new String('abc');
 // var s_2 = new Boolean(true);
 // var s_2 = new Number(10);
