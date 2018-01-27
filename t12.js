@@ -22,8 +22,9 @@
 
     Person.fn = Person.prototype = {
         name:'default',
-        constructor:Person,
+        // constructor:Person,
         //构造函数不能用箭头函数
+        //注掉也可以，浏览器会在对象新建的时候自动补上构造函数，但保险起见
         init:function(n){this.name = n;return this;},
         say:function(x){console.log(this.name + ' say ' + x);},//好用
         dosth:function(x){console.log(this.name + ' do ' + x);}//好用
