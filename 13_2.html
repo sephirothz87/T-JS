@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>13-2 事件处理</title>
+    <script type="text/javascript">
+        // 放在前面不行，DOM还没加载，找不到
+        //        btn1 = document.getElementById('btn1');
+        //        btn1.onclick = function(){alert(this.id);};
+    </script>
+</head>
+<body>
+
+<form method="post">
+    <ul style="list-style: none;padding: 0 0;">
+        <li><input type="button" value="Click Me" onclick="showMessage()"/></li>
+        <li><input type="button" value="event.type" onclick="alert(event.type)"></li>
+        <li><input type="button" value="this.value" onclick="alert(this.value)"></li>
+        <li><input type="button" value="value" onclick="alert(value)"></li>
+
+        <li><input type="text" name="username" value=""></li>
+        <li><input type="button" value="Echo Username" onclick="alert(username.value)"></li>
+
+        <li><input type="button" id="btn1" value="BTN1"/></li>
+        <li><input type="button" id="btn2" value="BTN2"/></li>
+        <li><input type="button" id="btn3" value="BTN3"/></li>
+        <li></li>
+        <li></li>
+    </ul>
+</form>
+</body>
+<script type="text/javascript">
+    var showMessage = () => {
+        alert('hello world');
+    };
+
+    // 访问value的函数大概是这样,就容易理解原理了
+    //        function () {
+    //            with (document) {
+    //                with (this) {
+    //                    //onclick后面写的js代码
+    //                }
+    //            }
+    //        }
+    //  表单输入的情况可以这样理解
+    //        function () {
+    //            with (document) {
+    //                with (this.form) {
+    //                    //onclick后面写的js代码
+    //                }
+    //            }
+    //        }
+
+
+    // 放在后面可以
+    var btn1 = document.getElementById('btn1');
+    btn1.onclick = function () {
+        alert(this.id);
+        console.log(this);
+    };//this指向btn1元素
+
+    //    btn1.onclick = () => {
+    //        alert(this.id);
+    //        console.log(this);//window
+    //    };//这里不能用箭头函数，this指向window,弹出undefined
+
+    //DOM2的方法
+    var btn2 = document.getElementById('btn2');
+    btn2.addEventListener('click', function () {
+        console.log(this.id);//btn2
+        console.log(this);//<input type="button" id="btn2" value="BTN2">
+    },false);   //注意这里最后一个参数，true代表捕获阶段调用，false代表冒泡阶段调用
+
+    //    btn2.addEventListener('click',()=>{
+    //        console.log(this.id);//undefined
+    //        console.log(this);//window
+    //    },false);//同样不能用箭头函数
+
+    //如果想remove这个listner，需要把function写成一个函数表达式，然后再remove这个变量函数
+    //removeEventListener('click', handler, false));
+
+    //之前提到过老板IE用的是独立的一套事件系统
+    // 对应的接口是attachEvent()和detachEvent()，只能在冒泡阶段响应
+</script>
+</html>
