@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>13-3 事件对象</title>
+    <script type="text/javascript">
+        // 放在前面不行，DOM还没加载，找不到
+        //        btn1 = document.getElementById('btn1');
+        //        btn1.onclick = function(){alert(this.id);};
+    </script>
+</head>
+<body>
+
+<form method="post">
+    <ul style="list-style: none;padding: 0 0;">
+        <li><input type="button" id="btn1" value="BTN1"/></li>
+        <li></li>
+        <li></li>
+    </ul>
+</form>
+</body>
+<script type="text/javascript">
+    var btn1 = document.getElementById('btn1');
+    //    btn1.onclick = function (event) {
+    //        console.log(event);//MouseEvent{}
+    //        console.log(event.type);//click
+    //
+    //        console.log(event.currentTarget === this);//true
+    //        console.log(event.target === this);//true
+    //        //target和currentTarget的区别
+    //    };//和下面一样
+
+    btn1.addEventListener('click', function (event) {
+        console.log(event);//MouseEvent{}
+        console.log(event.type);//click
+
+        console.log(event.currentTarget === this);//true
+        console.log(event.target === this);//true
+        //target和currentTarget的区别,看点击btn后，document的事件如何响应
+        console.log(1);
+    }, false);
+
+    document.addEventListener('click', function (event) {
+        console.log(event);//MouseEvent{}
+        console.log(event.type);//click
+
+        console.log(event.currentTarget === this);//true
+        console.log(event.target === this);//false
+        console.log(event.target === btn1);//true
+        //即target是目标阶段的对象
+        //currentTarget是此时捕获/冒泡的对象（是的，即使改成捕获阶段，这里的target依然可以正确指向目标
+
+
+        console.log(2);//因为是冒泡阶段，先打1，后打2，改成捕获阶段就先打2后打1了
+    }, false);
+
+    //一个应用场景，制造鼠标悬停效果
+
+    window.addEventListener('load',function(event){console.log('loaded');},false);//页面加载后打印
+    window.addEventListener('resize',function(event){console.log('resize');},false);//调整窗口大小打印
+    window.addEventListener('mousewheel',function(event){console.log('mousewheel：'+event.wheelDelta);},false);//动鼠标滚轮时打印
+
+</script>
+</html>
