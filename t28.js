@@ -240,7 +240,7 @@ Person4.prototype = {
     sayName: function() {
         console.log(this.name);
     }
-}
+};
 var person1 = new Person4("Nicholas", 29, "Software Engineer");
 var person2 = new Person4("Greg", 27, "Doctor");
 person1.friends.push("Van");
@@ -258,7 +258,7 @@ function Person5(name, age, job) {
     this.job = job;
     this.friends = ["Shelby", "Court"];
 
-    if (typeof this.sayName != 'function') {
+    if (typeof this.sayName !== 'function') {
         console.log('make sayName');
         Person5.prototype.sayName = function() {
             console.log(this.name);
