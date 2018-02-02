@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>22-01 高级技巧</title>
+</head>
+
+<body>
+    <form method="post">
+        <ul style="list-style: none;padding: 0 0;">
+            <li>
+                <input type="button" id="btn1" value="BTN1" />
+            </li>
+            <li>
+                <input type="button" id="btn2" value="BTN2" />
+            </li>
+            <li>
+                <input type="button" id="btn3" value="BTN3" />
+            </li>
+            <li>
+                <input type="button" id="btn4" value="BTN4" />
+            </li>
+            <li>
+                <input type="button" id="btn5" value="BTN5" />
+            </li>
+        </ul>
+    </form>
+</body>
+<script type="text/javascript">
+let handler = {
+    message: 'event message',
+    handleClick: function(event) {
+        console.log(this.message);
+    },
+    handleClickArrow: (event) => {
+        console.log(this.message);
+    }
+};
+
+let btn1 = document.getElementById('btn1');
+
+//没用
+var event = {
+    message: 'window e message'
+};
+var message = 'w message';
+
+//正常的函数调用，函数和箭头函数的作用域，老话题了
+handler.handleClick(event); //event message
+handler.handleClickArrow(event); //w message
+
+// 标准写法，用闭包调用
+btn1.addEventListener('click', function(event) {
+    console.log(event); //MouseEvent{}
+    console.log(event.type); //click
+
+    console.log(event.currentTarget === this); //true
+    console.log(event.target === this); //true
+
+    //this指向调用主体
+    handler.handleClick(event); //event message
+
+    //this指向函数声明的上级对象
+    handler.handleClickArrow(event); //w message
+
+    //this指向函数声明的上级对象
+    event.message = 'e message';
+    handler.handleClickArrow(event); //w message
+
+    //this指向函数声明的上级对象
+    this.message = 'f message';
+    handler.handleClickArrow(event); //w message
+}, false);
+
+//不使用闭包的例子，作用域被修改到了btn2
+let btn2 = document.getElementById('btn2');
+btn2.message = 'btn2 message';
+btn2.addEventListener('click', handler.handleClick, false); //btn2 message
+
+//箭头函数非常专一，this指向函数声明的上级对象
+let btn3 = document.getElementById('btn3');
+btn3.addEventListener('click', handler.handleClickArrow, false); //w message
+
+//通过bind限定作用域到handler
+let btn4 = document.getElementById('btn4');
+btn4.addEventListener('click', handler.handleClick.bind(handler), false); //event message
+
+//箭头函数调用bind也不行
+let btn5 = document.getElementById('btn5');
+btn5.addEventListener('click', handler.handleClickArrow.bind(handler), false); //w message
+</script>
+
+</html>
