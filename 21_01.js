@@ -79,8 +79,6 @@ console.log(xhr3);
 // MyHeader:MyValue     //多了这条
 
 
-
-
 console.log('===============================GET/POST请求的参数传递===============================');
 //  get请求生成对应的url
 // function addURLParam(url, name, value) {
@@ -95,31 +93,6 @@ console.log('===============================GET/POST请求的参数传递=======
 // xhr.open('get',url,false);
 
 
-
 //  post请求生成对应的参数json
 // var form = document.getElementById('user-info');
 // xhr.send(serialize(form));
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
