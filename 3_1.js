@@ -117,29 +117,3 @@ console.log(v39);//2
 
 // 赋值是undefined，需要用v41给v40赋值，v41未声明，报错
 // let [v40 = v41,v41 = 2] = [];//Uncaught ReferenceError: v41 is not defined
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
