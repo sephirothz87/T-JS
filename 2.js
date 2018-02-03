@@ -1,5 +1,6 @@
 console.log('=============================let=============================');
-console.log('================初识let================'); {
+console.log('================初识let================');
+{
     let a = 10;
     var b = 1;
 }
@@ -7,7 +8,8 @@ console.log('================初识let================'); {
 // console.log(a);//报错     Uncaught ReferenceError: a is not defined
 console.log(b); //1
 
-for (let i = 0; i < 4; i++) {;
+for (let i = 0; i < 4; i++) {
+    ;
 }
 // console.log(i);//报错     Uncaught ReferenceError: a is not defined
 
@@ -15,7 +17,7 @@ for (let i = 0; i < 4; i++) {;
 console.log('================在循环体中理解================');
 var a = [];
 for (var i = 0; i < 10; i++) {
-    a[i] = function() {
+    a[i] = function () {
         console.log(i);
     };
 }
@@ -24,7 +26,7 @@ a[6](); //10
 // 改成这样
 var a2 = [];
 for (let i = 0; i < 10; i++) {
-    a2[i] = function() {
+    a2[i] = function () {
         console.log(i);
     };
 }
@@ -129,7 +131,8 @@ f3(); //undefined
 //防止局部变量泄露到全局
 var s1 = 'hello';
 
-for (var i = 0; i < s1.length; i++) {;
+for (var i = 0; i < s1.length; i++) {
+    ;
 }
 
 console.log(i); //5
@@ -150,13 +153,15 @@ console.log(i); //5
 
 //某些场景不在需要IIFE了，类似上面的循环定义函数
 //或者下面这个例子
-(function() {
-    var val12 = '';;
+(function () {
+    var val12 = '';
+    ;
 }());
 
 //这样写就好了
 {
-    let val13 = '';;
+    let val13 = '';
+    ;
 }
 
 
@@ -175,7 +180,7 @@ function f4() {
     console.log('out f4');
 }
 
-(function() {
+(function () {
     if (true) {
         function f4() {
             console.log('in f4');
@@ -197,6 +202,7 @@ function f5() {
         function f5() {
             console.log('in f5');
         }
+
         f5(); //in f5
     }
     f5(); //in f5
@@ -217,6 +223,7 @@ function f6() {
         function f6() {
             console.log('in f6');
         }
+
         f6();
     }
     f6(); //out f6
