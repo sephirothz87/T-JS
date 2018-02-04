@@ -23,13 +23,7 @@ console.log('\u{41}\u{42}\u{43}');//ABC
 //直接用unicode当代码也可以
 let hello = 456;
 
-console.log(hell\u
-{
-    6
-    f
-}
-)
-;//456
+console.log(hell\u{6f});//456
 console.log('\u{20BB7}' === '\uD842\uDFB7');//true
 
 console.log('\u{1f680}' === '\ud83d\ude80');//true
