@@ -9,6 +9,33 @@
 <body>
 </body>
 <script type="text/javascript">
+
+    O1 = function(){
+        this.p1 = 'p1'
+        this.p2 = 'p2'
+    };
+
+    o1 = function(){
+        this.p3 = 'p3'
+        this.p4 = 'p4'
+    };
+
+    o1.prototype = new O1();
+
+    oo = new o1();
+
+    console.log(oo.p1);
+    console.log(oo.p2);
+    console.log(oo.p3);
+    console.log(oo.p4);
+
+    console.log(oo.hasOwnProperty('p1'));
+    console.log(oo.hasOwnProperty('p2'));
+    console.log(oo.hasOwnProperty('p3'));
+    console.log(oo.hasOwnProperty('p4'));
+
+    console.log(O1.prototype.isPrototypeOf(oo));
+    console.log(o1.prototype.isPrototypeOf(oo));
 </script>
 
 </html>
