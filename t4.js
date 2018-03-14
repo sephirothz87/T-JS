@@ -57,7 +57,7 @@ var longestValidParentheses = function(s) {
 			stackL.push(i);
 		} else if(s.charAt(i) == ')') {
 			if(stackL.length == 0){
-				max = Math.max(max,cursorR - wholeLeftCursor + 1);
+				// max = Math.max(max,cursorR - wholeLeftCursor + 1);
 				cursorL = Infinity;
 				wholeLeftCursor = Infinity;
 			}
@@ -71,6 +71,7 @@ var longestValidParentheses = function(s) {
 
 				if(stackL.length==0){
 					wholeLeftCursor = Math.min(cursorL,wholeLeftCursor);
+					max = Math.max(max,cursorR - wholeLeftCursor + 1);
 					cursorL = Infinity;
 				}
 			}
@@ -93,10 +94,10 @@ var longestValidParentheses = function(s) {
 // s1 = '(()';
 // s1 = '())';
 // s1 = ')()())';
-s1 = "()(()";
+// s1 = "()(()";
 // s1 = "()()"
 // s1 = "(()()";
-// s1 = '()';
+s1 = '()';
 // s1 = ")(((((()())()()))()(()))(";
 // s1 = "(()()(())((";
 
