@@ -15,18 +15,36 @@
 // }
 
 //不借助新的数组,不需要返回值
+// function removeDu(nums){
+//     let len = nums.length;
+//     for (let i=0;i<len;i++){
+//         while(nums[i+1] === nums[i]){
+//             nums.splice(i+1,1);
+//             len--;
+//         }
+//     }
+// }
+
+
+//完美答案
+//思路，直接替换数组的值后，截取新的数组长度，直接生成目标数组
 function removeDu(nums){
-    let len = nums.length;
-    for (let i=0;i<len;i++){
-        while(nums[i+1] === nums[i]){
-            nums.splice(i+1,1);
-            len--;
+    let j = 0;
+
+    for(let i=0,t='';i<nums.length;i++){
+        if(nums[i] !== t){
+            t = nums[i];
+            nums[j] = t;
+            j++;
         }
     }
+
+    nums.length = j
 }
 
-a1 = [1,1,2];
-// a1 = [1,1,2,3,4,4,4,5,6,7,7,8,8,9,10];
+
+// a1 = [1,1,2];
+a1 = [1,1,2,3,4,4,4,5,6,7,7,8,8,9,10];
 
 removeDu(a1);
 console.log(a1);
